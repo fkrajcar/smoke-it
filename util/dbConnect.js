@@ -11,7 +11,7 @@ async function dbConnect() {
         return
     }
     try {
-        const db: Mongoose = await connect(process.env.MONGODB_URI, {
+        const db = await connect(process.env.MONGODB_URI, {
             dbName: process.env.MONGODB_DB
         })
 
