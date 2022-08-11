@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import Image from 'next/Image'
 import dbConnect from '../util/dbConnect'
 import { IEvent, Event } from './api/models/Events'
 
