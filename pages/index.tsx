@@ -28,7 +28,7 @@ export async function getServerSideProps() {
   await dbConnect()
 
   /* find all the data in our database */
-  // const response = await Event.find({ event: 'match_status_ready' })
+  // const response = await Event.find()
   const response = await Event.find({ event: { $in: ['match_status_ready', 'match_status_finished'] } }).sort({ timestamp: -1 })
 
   const events = JSON.parse(JSON.stringify(response))

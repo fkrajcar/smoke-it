@@ -25,20 +25,12 @@ a {
   }
 }
 
-.expired-notice {
-  /* text-align: center;
-  padding: 2rem;
-  border: 1px solid #ebebeb;
-  border-radius: 0.25rem;
-  margin: 0.5rem; */
-}
-.expired-notice-div {
+.expired-notice-container {
   display: flex;
-  /* text-align: center;
-  padding: 2rem;
-  border: 1px solid #ebebeb;
-  border-radius: 0.25rem;
-  margin: 0.5rem; */
+  justify-content: center;
+  padding: 0.5rem;
+  background-color: #A13D63;
+  margin-bottom: 10px;
 }
 
 .expired-notice > span {
@@ -54,6 +46,10 @@ a {
 .show-counter {
   padding: 0.5rem;
   display: flex;
+  justify-content: center;
+  background-color: #F7A278;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .show-counter .countdown-link {
