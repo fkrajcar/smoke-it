@@ -1,10 +1,12 @@
 import React from 'react';
 
-export const ExpiredNotice = () => {
+export const ExpiredNotice = ({matchId}) => {
     return (
-      <div className="expired-notice">
-        <span>Expired!!!</span>
-        <p>Please select a future date and time.</p>
+        <div className="expired-notice-container">
+           
+      <a target='_blank' rel="noreferrer" href={`https://www.faceit.com/en/csgo/room/${matchId}/scoreboard`} className="expired-notice">
+        <p>Faceit match link</p>
+      </a>
       </div>
     );
   };
