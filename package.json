@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "date-fns": "^2.29.1",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.2",
     "next": "12.2.4",
