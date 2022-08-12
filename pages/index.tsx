@@ -13,7 +13,7 @@ const Index = (props: IProps) => (
     {props.events.map((match: IEvent, index) => {
       const date = parseISO(match.timestamp)
 
-      const target = addSeconds(date, 298);
+      const target = addSeconds(date, 299);
 
       return (
         <CountdownTimer matchStatus={match.event} matchId={match.payload.id} key={match.transaction_id} targetDate={target.toISOString()} />
