@@ -17,5 +17,7 @@ export const CountdownTimer = ({ targetDate, matchId, matchStatus }) => {
         seconds={seconds}
       />
     );
+  } else{
+    return null;
   }
 };
