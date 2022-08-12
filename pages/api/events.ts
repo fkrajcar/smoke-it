@@ -35,15 +35,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break
     case 'POST':
       try {
-        // const event = await Event.create(
-        //   req.body
-        // ) /* create a new model in the database */
         const event = new Event(req.body);
 
-        await event.save();
-        console.log('post', event, req.body);
+        const eventExists = await Event.exists({ transaction_id: event.transaction_id });
 
-        res.status(201).json({ success: true, data: event })
+        if (eventExists) {
+          res.status(400).json({ success: false, message: 'Event already exists' })
+        } else {
+          await event.save();
+
+          res.status(201).json({ success: true, data: event })
+        }
       } catch (error) {
         res.status(400).json({ success: false })
       }
