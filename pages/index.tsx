@@ -1,7 +1,8 @@
 import dbConnect from '../util/dbConnect'
 import { IEvent, Event } from './api/models/Events'
-import { addSeconds, parseISO, formatDistanceToNow, setDate, isBefore, differenceInSeconds } from 'date-fns'
+import { addSeconds, parseISO } from 'date-fns'
 import { CountdownTimer } from '../components/CountdownTimer'
+import Head from 'next/head';
 
 interface IProps {
   events: IEvent[];
@@ -9,6 +10,10 @@ interface IProps {
 
 const Index = (props: IProps) => (
   <>
+    <Head>
+      <title>SmokeIt</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
     {/* Create a card for each pet */}
     {props.events.map((match: IEvent, index) => {
       const date = parseISO(match.timestamp)
