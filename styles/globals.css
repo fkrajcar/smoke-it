@@ -28,10 +28,15 @@ a {
 
 .expired-notice-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 0.5rem;
-  background-color: #a13d63;
+  background-color: #90323d;
   margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.expired-notice-container.win {
+  background-color: #297045;
 }
 
 .expired-notice > span {

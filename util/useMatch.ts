@@ -1,19 +1,20 @@
 import axios from 'axios'
-import useSWRImmutable from 'swr'
+import useSWRImmutable from 'swr/immutable'
 
 import { config } from '../config/misc'
 
-const fetcher = (url: string, token: string) =>
+const fetcher = (url: string) =>
   axios
-    .get(url, { headers: { Authorization: 'Bearer ' + token } })
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${config.FACEIT_API_CLIENT_TOKEN}`,
+      },
+    })
     .then((res) => res.data)
 
 export function useMatch(matchId: string) {
   const { data, error } = useSWRImmutable(
-    [
-      `${config.FACEIT_API_URL_BASE}/matches/${matchId}/stats`,
-      process.env.FACEIT_API_CLIENT_TOKEN,
-    ],
+    `${config.FACEIT_API_URL_BASE}/matches/${matchId}/stats`,
     fetcher
   )
 
