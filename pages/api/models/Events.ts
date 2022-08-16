@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose'
+import mongoose, { model, Schema } from 'mongoose'
 
 export const enum MatchStatus {
   CREATED = 'match_object_created',
@@ -65,4 +65,4 @@ const eventSchema = new Schema<IEvent>({
 })
 
 export const Event =
-  mongoose.models.Event || model<IEvent>('Event', eventSchema)
+  mongoose?.models?.Event || model<IEvent>('Event', eventSchema)

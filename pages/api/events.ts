@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import dbConnect from '../../util/dbConnect'
 import { Event } from './models/Events'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   req: NextApiRequest,
