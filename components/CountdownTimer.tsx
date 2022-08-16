@@ -1,4 +1,4 @@
-import { MatchStatus } from '../pages'
+import { MatchStatus } from '../pages/api/models/Events'
 import { useCountdown } from '../util/useCountdown'
 import { PastMatch } from './PastMatch'
 import { ShowCounter } from './ShowCounter'

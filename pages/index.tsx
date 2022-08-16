@@ -1,13 +1,8 @@
 import dbConnect from '../util/dbConnect'
-import { IEvent, Event } from './api/models/Events'
+import { IEvent, Event, MatchStatus } from './api/models/Events'
 import { addSeconds, parseISO } from 'date-fns'
 import { CountdownTimer } from '../components/CountdownTimer'
 import Head from 'next/head'
-
-export const enum MatchStatus {
-  READY = 'match_status_ready',
-  FINISHED = 'match_status_finished',
-}
 
 interface IProps {
   events: IEvent[]

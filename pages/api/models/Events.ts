@@ -1,5 +1,14 @@
 import mongoose, { Schema, model } from 'mongoose'
 
+export const enum MatchStatus {
+  CREATED = 'match_object_created',
+  ABORTED = 'match_status_aborted',
+  CANCELLED = 'match_status_cancelled',
+  CONFIGURING = 'match_status_configuring',
+  FINISHED = 'match_status_finished',
+  READY = 'match_status_ready',
+}
+
 export interface Player {
   id: string
   nickname: string
