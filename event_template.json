@@ -1,0 +1,194 @@
+{
+  "transaction_id": "e0225da6-07b8-4357-9566-6ad505528c4e",
+  "event": "match_status_finished",
+  "event_id": "8df806e0-7a31-4fb6-a16f-f83d18eb9f34",
+  "third_party_id": "c219d336-5b14-4bb8-8003-b5a78a672fb6",
+  "app_id": "59a587c4-1e14-46e9-a154-d6ff73d67ef9",
+  "timestamp": "2020-03-07T20:16:17Z",
+  "retry_count": 0,
+  "version": 1,
+  "payload": {
+    "id": "1-a54e27ae-f3bb-4811-a9ab-ddedeee596b1",
+    "organizer_id": "f06c9c8c-5acc-4b1e-98b6-1ab0b6cc94c8",
+    "region": "EU",
+    "game": "csgo",
+    "version": 16,
+    "entity": {
+      "id": "9aff7111-1fb7-4e8b-bcf3-c5e8406c7497",
+      "name": "Merkur Masters: Open Qualifier 7",
+      "type": "championship"
+    },
+    "teams": [
+      {
+        "id": "c153cb8e-71cd-40be-900a-2a552330c394",
+        "name": "eSport RN",
+        "type": "premade",
+        "avatar": "https://assets.faceit-cdn.net/teams_avatars/c153cb8e-71cd-40be-900a-2a552330c394_1581260009893.jpg",
+        "leader_id": "f717bbc5-0993-4954-9c4e-46bac0f63b73",
+        "co_leader_id": "",
+        "roster": [
+          {
+            "id": "74f0112a-765b-44ce-b1a7-5ed5c5a593c3",
+            "nickname": "j1NZO",
+            "avatar": "https://assets.faceit-cdn.net/avatars/74f0112a-765b-44ce-b1a7-5ed5c5a593c3_1583587328292.jpg",
+            "game_id": "76561198181035837",
+            "game_name": ".*･｡ﾟ*☆.",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "462c3700-2eae-47eb-b7fc-f99c679306b4",
+            "nickname": "sesL",
+            "avatar": "https://assets.faceit-cdn.net/avatars/462c3700-2eae-47eb-b7fc-f99c679306b4_1582643097814.jpg",
+            "game_id": "76561198087457007",
+            "game_name": "♛",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "16239363-6275-4c10-ae02-ac70551d3cf4",
+            "nickname": "-Mongol",
+            "avatar": "https://assets.faceit-cdn.net/avatars/16239363-6275-4c10-ae02-ac70551d3cf4_1581464541304.jpg",
+            "game_id": "76561198003597149",
+            "game_name": "Mongol",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "f717bbc5-0993-4954-9c4e-46bac0f63b73",
+            "nickname": "MITSARAS_",
+            "avatar": "https://assets.faceit-cdn.net/avatars/f717bbc5-0993-4954-9c4e-46bac0f63b73_1550509367500.jpg",
+            "game_id": "76561198069842994",
+            "game_name": "MITSARAS_",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "4a0e43ab-a2d3-4c53-9906-b4eabd94ff60",
+            "nickname": "mvN",
+            "avatar": "https://assets.faceit-cdn.net/avatars/4a0e43ab-a2d3-4c53-9906-b4eabd94ff60_1582071001373.jpg",
+            "game_id": "76561198126007326",
+            "game_name": ".*･｡ﾟ*☆.",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          }
+        ],
+        "substitutions": 0,
+        "substitutes": [
+          {
+            "id": "2eaca009-8cf0-4fb1-86f1-35d06eb79b56",
+            "nickname": "lempi-_-",
+            "avatar": "https://assets.faceit-cdn.net/avatars/2eaca009-8cf0-4fb1-86f1-35d06eb79b56_1574865585445.jpg",
+            "game_id": "76561198045700704",
+            "game_name": "ReacTioNNN",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "2181d6db-90c4-4264-9400-684b0fc724ba",
+            "nickname": "_sha",
+            "avatar": "https://assets.faceit-cdn.net/avatars/2181d6db-90c4-4264-9400-684b0fc724ba_1557754308276.jpg",
+            "game_id": "76561198012192427",
+            "game_name": "sha",
+            "game_skill_level": 7,
+            "membership": "",
+            "anticheat_required": true
+          }
+        ]
+      },
+      {
+        "id": "af46623c-67e2-495e-ba06-844667375124",
+        "name": "plan-B esports",
+        "type": "premade",
+        "avatar": "https://assets.faceit-cdn.net/teams_avatars/af46623c-67e2-495e-ba06-844667375124_1556291994202.jpg",
+        "leader_id": "576e6a9b-e9b6-4ac8-894b-db9115579109",
+        "co_leader_id": "",
+        "roster": [
+          {
+            "id": "42f70ec1-45f5-4c33-9dfb-37949d07903e",
+            "nickname": "rabtus",
+            "avatar": "https://assets.faceit-cdn.net/avatars/42f70ec1-45f5-4c33-9dfb-37949d07903e_1550516896160.jpg",
+            "game_id": "76561198026695697",
+            "game_name": "rabtus",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "e6a755e4-f945-40d2-a6d8-622a5cddc3eb",
+            "nickname": "farmaG",
+            "avatar": "https://assets.faceit-cdn.net/avatars/e6a755e4-f945-40d2-a6d8-622a5cddc3eb_1551080271022.jpg",
+            "game_id": "76561197992268324",
+            "game_name": "farmaG",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "e5b6f773-932a-45c6-add5-21c6463ff27e",
+            "nickname": "xTreMeCS",
+            "avatar": "https://assets.faceit-cdn.net/avatars/e5b6f773-932a-45c6-add5-21c6463ff27e_1576189705033.jpg",
+            "game_id": "76561198030103227",
+            "game_name": "xTreMe",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "97618c62-b1ea-4acb-81d5-b031d8208674",
+            "nickname": "TWEEZYCS",
+            "avatar": "https://assets.faceit-cdn.net/avatars/97618c62-b1ea-4acb-81d5-b031d8208674_1577721254350.jpg",
+            "game_id": "76561198190848414",
+            "game_name": "tweezyCS™",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "576e6a9b-e9b6-4ac8-894b-db9115579109",
+            "nickname": "C3dril",
+            "avatar": "https://assets.faceit-cdn.net/avatars/576e6a9b-e9b6-4ac8-894b-db9115579109_1550533251764.png",
+            "game_id": "76561197972053468",
+            "game_name": "C3dril",
+            "game_skill_level": 10,
+            "membership": "",
+            "anticheat_required": true
+          }
+        ],
+        "substitutions": 0,
+        "substitutes": [
+          {
+            "id": "757ec741-be6b-4e8c-bd44-077f9102e7f5",
+            "nickname": "ceekayyyy",
+            "avatar": "",
+            "game_id": "76561197968189094",
+            "game_name": ".cKy /21/",
+            "game_skill_level": 3,
+            "membership": "",
+            "anticheat_required": true
+          },
+          {
+            "id": "991b19ec-2317-4f00-a4c6-d485942fe62e",
+            "nickname": "Hecle",
+            "avatar": "https://assets.faceit-cdn.net/avatars/991b19ec-2317-4f00-a4c6-d485942fe62e_1555878770017.jpg",
+            "game_id": "76561198216692295",
+            "game_name": "Hecle01",
+            "game_skill_level": 8,
+            "membership": "",
+            "anticheat_required": true
+          }
+        ]
+      }
+    ],
+    "created_at": "2020-03-07T17:17:48Z",
+    "updated_at": "2020-03-07T20:16:15Z",
+    "started_at": "1970-01-01T00:00:00Z",
+    "finished_at": "2020-03-07T20:16:15Z"
+  }
+}

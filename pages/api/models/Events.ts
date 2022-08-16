@@ -1,5 +1,20 @@
 import mongoose, { Schema, model } from 'mongoose'
 
+export interface Player {
+  id: string
+  nickname: string
+  avatar: string
+  game_name: string
+}
+
+export interface TeamEntity {
+  id: string
+  name: string
+  avatar: string
+  leader_id: string
+  roster: Player[]
+}
+
 export interface IEventPayloadEntity {
   id: string
 }
@@ -9,6 +24,7 @@ export interface IEventPayload {
   created_at: string
   updated_at: string
   entity: IEventPayloadEntity
+  teams: TeamEntity[]
 }
 
 export interface IEvent {
@@ -35,6 +51,7 @@ const eventSchema = new Schema<IEvent>({
     entity: {
       id: { type: String },
     },
+    teams: { type: Array },
   },
 })
 
