@@ -2,7 +2,10 @@ import dbConnect from '../../util/dbConnect'
 import { Event } from './models/Events'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req
 
   await dbConnect()
@@ -10,24 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (method) {
     case 'GET':
       try {
-        const events = await Event.find({}) /* find all the data in our database */
+        const events = await Event.find({})
 
-        // const event = new Event({
-        //   transaction_id: 'test',
-
-        //   payload: {
-        //     id: 'test2',
-
-        //     entity: {
-        //       id: 'test3',
-        //     },
-        //   },
-        // });
-
-        // await event.save();
-
-
-        console.log('get', events)
         res.status(200).json({ success: true, data: events })
       } catch (error) {
         res.status(400).json({ success: false })
@@ -35,14 +22,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break
     case 'POST':
       try {
-        const event = new Event(req.body);
+        const event = new Event(req.body)
 
-        const eventExists = await Event.exists({ transaction_id: event.transaction_id });
+        const eventExists = await Event.exists({
+          transaction_id: event.transaction_id,
+        })
 
         if (eventExists) {
-          res.status(400).json({ success: false, message: 'Event already exists' })
+          res
+            .status(400)
+            .json({ success: false, message: 'Event already exists' })
         } else {
-          await event.save();
+          await event.save()
 
           res.status(201).json({ success: true, data: event })
         }

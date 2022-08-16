@@ -2,29 +2,33 @@ import dbConnect from '../util/dbConnect'
 import { IEvent, Event } from './api/models/Events'
 import { addSeconds, parseISO } from 'date-fns'
 import { CountdownTimer } from '../components/CountdownTimer'
-import Head from 'next/head';
+import Head from 'next/head'
 
 interface IProps {
-  events: IEvent[];
+  events: IEvent[]
 }
 
-const Index = (props: IProps) => (
+const Index = ({ events }: IProps) => (
   <>
     <Head>
       <title>SmokeIt</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    {/* Create a card for each pet */}
-    {props.events.map((match: IEvent, index) => {
-      const date = parseISO(match.timestamp)
 
-      const target = addSeconds(date, 299);
+    {events.map((event: IEvent, index) => {
+      const date = parseISO(event.timestamp)
+
+      const target = addSeconds(date, 299)
 
       return (
-        <CountdownTimer matchStatus={match.event} matchId={match.payload.id} key={match.transaction_id} targetDate={target.toISOString()} />
+        <CountdownTimer
+          matchStatus={event.event}
+          matchId={event.payload.id}
+          key={event.transaction_id}
+          targetDate={target.toISOString()}
+        />
       )
-    }
-    )}
+    })}
   </>
 )
 
@@ -34,7 +38,9 @@ export async function getServerSideProps() {
 
   /* find all the data in our database */
   // const response = await Event.find()
-  const response = await Event.find({ event: { $in: ['match_status_ready', 'match_status_finished'] } }).sort({ timestamp: -1 })
+  const response = await Event.find({
+    event: { $in: ['match_status_ready', 'match_status_finished'] },
+  }).sort({ timestamp: -1 })
 
   const events = JSON.parse(JSON.stringify(response))
   console.log(events)

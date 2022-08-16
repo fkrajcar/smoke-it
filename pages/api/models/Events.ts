@@ -1,24 +1,24 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose'
 
 export interface IEventPayloadEntity {
-  id: string;
+  id: string
 }
 
 export interface IEventPayload {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  entity: IEventPayloadEntity;
+  id: string
+  created_at: string
+  updated_at: string
+  entity: IEventPayloadEntity
 }
 
 export interface IEvent {
-  transaction_id: string;
-  event: string;
-  event_id: string;
-  third_party_id: string;
-  app_id: string;
-  timestamp: string;
-  payload: IEventPayload;
+  transaction_id: string
+  event: string
+  event_id: string
+  third_party_id: string
+  app_id: string
+  timestamp: string
+  payload: IEventPayload
 }
 
 const eventSchema = new Schema<IEvent>({
@@ -36,7 +36,7 @@ const eventSchema = new Schema<IEvent>({
       id: { type: String },
     },
   },
-});
+})
 
-// export const User = mongoose.models.Match || mongoose.model('User', user);
-export const Event = mongoose.models.Event || model<IEvent>('Event', eventSchema);
+export const Event =
+  mongoose.models.Event || model<IEvent>('Event', eventSchema)
