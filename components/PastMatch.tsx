@@ -1,6 +1,8 @@
-import React from 'react'
+interface PastMatchProps {
+  matchId: string
+}
 
-export const ExpiredNotice = ({ matchId }) => {
+export const PastMatch = ({ matchId }: PastMatchProps) => {
   return (
     <div className="expired-notice-container">
       <a

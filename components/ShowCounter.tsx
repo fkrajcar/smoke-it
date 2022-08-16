@@ -1,8 +1,18 @@
-import React from 'react'
 import { DateTimeDisplay } from './DateTimeDisplay'
 
-export const ShowCounter = ({ minutes, seconds, matchId }) => {
+interface ShowCounterProps {
+  minutes: number
+  seconds: number
+  matchId: string
+}
+
+export const ShowCounter = ({
+  minutes,
+  seconds,
+  matchId,
+}: ShowCounterProps) => {
   const isDanger = minutes === 0
+
   return (
     <a
       target="_blank"
