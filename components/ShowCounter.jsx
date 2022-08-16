@@ -1,7 +1,7 @@
 import React from 'react'
 import { DateTimeDisplay } from './DateTimeDisplay'
 
-export const ShowCounter = ({ days, hours, minutes, seconds, matchId }) => {
+export const ShowCounter = ({ minutes, seconds, matchId }) => {
   const isDanger = minutes === 0
   return (
     <a
