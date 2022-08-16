@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export const DateTimeDisplay = ({ value, type, isDanger }) => {
   return (
@@ -6,5 +6,5 @@ export const DateTimeDisplay = ({ value, type, isDanger }) => {
       <p>{value}</p>
       <span>{type}</span>
     </div>
-  );
-};
+  )
+}

@@ -15,7 +15,7 @@ const Index = ({ events }: IProps) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
-    {events.map((event: IEvent, index) => {
+    {events.map((event: IEvent) => {
       const date = parseISO(event.timestamp)
 
       const target = addSeconds(date, 299)

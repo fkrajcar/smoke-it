@@ -29,7 +29,7 @@ a {
   display: flex;
   justify-content: center;
   padding: 0.5rem;
-  background-color: #A13D63;
+  background-color: #a13d63;
   margin-bottom: 10px;
 }
 
@@ -47,7 +47,7 @@ a {
   padding: 0.5rem;
   display: flex;
   justify-content: center;
-  background-color: #F7A278;
+  background-color: #f7a278;
   margin-bottom: 10px;
   font-weight: bold;
 }
