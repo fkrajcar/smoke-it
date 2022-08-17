@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Container from '@mui/material/Container'
 
 import { EventsList } from '../components/EventsList'
 import dbConnect from '../util/dbConnect'
@@ -9,14 +9,9 @@ interface IProps {
 }
 
 const Index = ({ events }: IProps) => (
-  <>
-    <Head>
-      <title>SmokeIt</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-
+  <Container>
     <EventsList events={events} />
-  </>
+  </Container>
 )
 
 export async function getServerSideProps() {

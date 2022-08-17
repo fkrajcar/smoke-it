@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method } = req
+  const { method, body } = req
 
   await dbConnect()
 
@@ -23,7 +23,7 @@ export default async function handler(
       break
     case 'POST':
       try {
-        const event = new Event(req.body)
+        const event = new Event(body)
 
         const eventExists = await Event.exists({
           transaction_id: event.transaction_id,

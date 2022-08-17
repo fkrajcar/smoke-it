@@ -1,3 +1,4 @@
+import List from '@mui/material/List'
 import { addSeconds, parseISO } from 'date-fns'
 import React from 'react'
 
@@ -14,7 +15,7 @@ export const EventsList = ({ events }: EventsListProps) => {
   }
 
   return (
-    <>
+    <List>
       {events.map((event: IEvent, index: number) => {
         const date = parseISO(event.timestamp)
 
@@ -29,6 +30,6 @@ export const EventsList = ({ events }: EventsListProps) => {
           />
         )
       })}
-    </>
+    </List>
   )
 }
