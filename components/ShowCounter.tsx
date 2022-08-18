@@ -1,4 +1,9 @@
-import { DateTimeDisplay } from './DateTimeDisplay'
+import Box from '@mui/material/Box'
+import LinearProgress from '@mui/material/LinearProgress'
+import ListItemText from '@mui/material/ListItemText'
+import { useMemo } from 'react'
+
+import SmokeListItemButton from './SmokeListItemButton'
 
 interface ShowCounterProps {
   minutes: number
@@ -11,19 +16,38 @@ export const ShowCounter = ({
   seconds,
   matchId,
 }: ShowCounterProps) => {
-  const isDanger = minutes === 0
+  const isDanger = useMemo(() => minutes < 0, [minutes])
+  const progress = useMemo(
+    () => (minutes * 60 + seconds) / 3,
+    [minutes, seconds]
+  )
+
+  const sx = {
+    flex: 'none',
+    fontWeight: 'bold',
+  }
 
   return (
-    <a
-      target="_blank"
-      rel="noreferrer"
-      href={`https://www.faceit.com/en/csgo/room/${matchId}`}
-    >
-      <div className="show-counter">
-        <DateTimeDisplay value={minutes} type={'Mins'} />
-        <p>:</p>
-        <DateTimeDisplay value={seconds} type={'Seconds'} isDanger={isDanger} />
-      </div>
-    </a>
+    <SmokeListItemButton matchId={matchId} divider counter>
+      <Box sx={{ display: 'flex', justfyContent: 'center', marginBottom: 1 }}>
+        <ListItemText sx={sx} disableTypography primary={minutes} />
+        <ListItemText sx={sx} secondary={':'} />
+        <ListItemText
+          sx={{
+            ...sx,
+            ...(isDanger && { color: 'red' }),
+          }}
+          disableTypography
+          primary={seconds}
+        />
+      </Box>
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress
+          color={isDanger ? 'error' : 'secondary'}
+          variant="determinate"
+          value={progress}
+        />
+      </Box>
+    </SmokeListItemButton>
   )
 }

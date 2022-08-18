@@ -20,7 +20,7 @@ export const EventsList = ({ events }: EventsListProps) => {
         const date = parseISO(event.timestamp)
 
         const targetDateTime = addSeconds(date, 299)
-
+        // console.log(event.payload.match)
         return (
           <CountdownTimer
             matchStatus={event.event}

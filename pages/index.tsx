@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const Index = ({ events }: IProps) => (
-  <Container>
+  <Container disableGutters>
     <EventsList events={events} />
   </Container>
 )

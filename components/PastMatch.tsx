@@ -1,15 +1,14 @@
 import { useTheme } from '@mui/material'
-// or
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Image from 'next/image'
 import { useEffect, useMemo } from 'react'
 
 import { config } from '../config/misc'
 import { useMatch } from '../util/useMatch'
+import SmokeListItemButton from './SmokeListItemButton'
 
 interface Player {
   player_id: string
@@ -71,46 +70,35 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
   }
 
   return (
-    <ListItem>
-      <ListItemButton
-        component="a"
-        target="_blank"
-        rel="noreferrer"
-        href={`https://www.faceit.com/en/csgo/room/${matchId}`}
+    <SmokeListItemButton matchId={matchId}>
+      <Image
+        src={`/${match.round_stats.Map}.jpg`}
+        alt={`${match.round_stats.Map} map`}
+        width={200}
+        height={100}
+      />
+      <Box
         sx={{
-          borderRadius: 1,
-          border: `1px solid ${theme.palette.divider}`,
-          '&:hover': {
-            borderColor: theme.palette.primary.light,
+          display: 'flex',
+          flexDirection: 'row',
+          flex: 1,
+          marginLeft: '10px',
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
           },
         }}
       >
-        <Image
-          src={`/${match.round_stats.Map}.jpg`}
-          alt={`${match.round_stats.Map} map`}
-          width={200}
-          height={100}
-        />
-        <Box
+        <ListItemText primary={match.round_stats.Map} />
+        <ListItemText primary={match.round_stats.Score} />
+        <ListItemText
+          primary={isWin ? 'WIN' : 'LOSE'}
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            flex: 1,
-            marginLeft: '10px',
+            color: isWin
+              ? theme.palette.success.main
+              : theme.palette.error.main,
           }}
-        >
-          <ListItemText primary={match.round_stats.Map} />
-          <ListItemText primary={match.round_stats.Score} />
-          <ListItemText
-            primary={isWin ? 'WIN' : 'LOSE'}
-            sx={{
-              color: isWin
-                ? theme.palette.success.main
-                : theme.palette.error.main,
-            }}
-          />
-        </Box>
-      </ListItemButton>
-    </ListItem>
+        />
+      </Box>
+    </SmokeListItemButton>
   )
 }
