@@ -1,8 +1,11 @@
 import { useTheme } from '@mui/material'
+// or
+import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
+import Image from 'next/image'
 import { useEffect, useMemo } from 'react'
 
 import { config } from '../config/misc'
@@ -75,24 +78,38 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
         rel="noreferrer"
         href={`https://www.faceit.com/en/csgo/room/${matchId}`}
         sx={{
-          backgroundColor: isWin
-            ? theme.palette.success.main
-            : theme.palette.error.main,
           borderRadius: 1,
+          border: `1px solid ${theme.palette.divider}`,
           '&:hover': {
-            backgroundColor: isWin
-              ? theme.palette.success.main
-              : theme.palette.error.main,
+            borderColor: theme.palette.primary.light,
           },
         }}
       >
-        <ListItemText primary={match.round_stats.Map} />
-        <ListItemText primary={match.round_stats.Score} />
-        {isWin ? (
-          <ListItemText primary="Win" />
-        ) : (
-          <ListItemText primary="Lose" />
-        )}
+        <Image
+          src={`/${match.round_stats.Map}.jpg`}
+          alt={`${match.round_stats.Map} map`}
+          width={200}
+          height={100}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flex: 1,
+            marginLeft: '10px',
+          }}
+        >
+          <ListItemText primary={match.round_stats.Map} />
+          <ListItemText primary={match.round_stats.Score} />
+          <ListItemText
+            primary={isWin ? 'WIN' : 'LOSE'}
+            sx={{
+              color: isWin
+                ? theme.palette.success.main
+                : theme.palette.error.main,
+            }}
+          />
+        </Box>
       </ListItemButton>
     </ListItem>
   )
