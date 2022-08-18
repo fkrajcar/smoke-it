@@ -3,20 +3,18 @@ import LinearProgress from '@mui/material/LinearProgress'
 import ListItemText from '@mui/material/ListItemText'
 import { useMemo } from 'react'
 
+import { useCountdown } from '../util/useCountdown'
 import SmokeListItemButton from './SmokeListItemButton'
 
-interface ShowCounterProps {
-  minutes: number
-  seconds: number
+interface CounterProps {
+  targetDateTime: Date
   matchId: string
 }
 
-export const ShowCounter = ({
-  minutes,
-  seconds,
-  matchId,
-}: ShowCounterProps) => {
-  const isDanger = useMemo(() => minutes < 0, [minutes])
+export const Counter = ({ targetDateTime, matchId }: CounterProps) => {
+  const [, , minutes, seconds] = useCountdown(targetDateTime.toISOString())
+
+  const isDanger = useMemo(() => minutes <= 0, [minutes])
   const progress = useMemo(
     () => (minutes * 60 + seconds) / 3,
     [minutes, seconds]
@@ -25,13 +23,18 @@ export const ShowCounter = ({
   const sx = {
     flex: 'none',
     fontWeight: 'bold',
+    fontSize: '1.5rem',
+  }
+
+  if (minutes + seconds < 0) {
+    return null
   }
 
   return (
-    <SmokeListItemButton matchId={matchId} divider counter>
+    <SmokeListItemButton matchId={matchId} divider counter danger={isDanger}>
       <Box sx={{ display: 'flex', justfyContent: 'center', marginBottom: 1 }}>
         <ListItemText sx={sx} disableTypography primary={minutes} />
-        <ListItemText sx={sx} secondary={':'} />
+        <ListItemText sx={sx} disableTypography primary={':'} />
         <ListItemText
           sx={{
             ...sx,

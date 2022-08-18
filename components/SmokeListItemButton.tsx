@@ -8,12 +8,14 @@ interface SmokeListItemButtonProps {
   matchId: string
   divider?: boolean
   counter?: boolean
+  danger?: boolean
 }
 
 const SmokeListItemButton = ({
   counter,
   divider,
   matchId,
+  danger,
   children,
 }: SmokeListItemButtonProps) => {
   const theme = useTheme()
@@ -27,7 +29,13 @@ const SmokeListItemButton = ({
         href={`https://www.faceit.com/en/csgo/room/${matchId}`}
         sx={{
           borderRadius: 1,
-          border: `1px solid ${theme.palette.divider}`,
+          border: `1px solid ${
+            counter
+              ? danger
+                ? theme.palette.error.main
+                : theme.palette.primary.light
+              : theme.palette.divider
+          }`,
           '&:hover': {
             borderColor: theme.palette.primary.light,
           },

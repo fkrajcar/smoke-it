@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Image from 'next/image'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { config } from '../config/misc'
 import { useMatch } from '../util/useMatch'
@@ -26,10 +26,6 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
   const theme = useTheme()
 
   const match = useMemo(() => data?.rounds?.[0], [data])
-
-  useEffect(() => {
-    console.log(match)
-  }, [match, data])
 
   const isWin = useMemo(() => {
     const ourTeam = match?.teams?.find((team: Team) => {

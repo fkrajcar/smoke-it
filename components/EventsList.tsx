@@ -2,8 +2,9 @@ import List from '@mui/material/List'
 import { addSeconds, parseISO } from 'date-fns'
 import React from 'react'
 
-import { IEvent } from '../pages/api/models/Events'
-import { CountdownTimer } from './CountdownTimer'
+import { IEvent, MatchStatus } from '../pages/api/models/Events'
+import { Counter } from './Counter'
+import { PastMatch } from './PastMatch'
 
 interface EventsListProps {
   events: IEvent[]
@@ -16,20 +17,25 @@ export const EventsList = ({ events }: EventsListProps) => {
 
   return (
     <List>
-      {events.map((event: IEvent, index: number) => {
-        const date = parseISO(event.timestamp)
+      {events.map(
+        ({ event: eventStatus, payload, timestamp }: IEvent, index: number) => {
+          const date = parseISO(timestamp)
 
-        const targetDateTime = addSeconds(date, 299)
-        // console.log(event.payload.match)
-        return (
-          <CountdownTimer
-            matchStatus={event.event}
-            matchId={event.payload.id}
-            key={event.transaction_id + index}
-            targetDate={targetDateTime.toISOString()}
-          />
-        )
-      })}
+          const targetDateTime = addSeconds(date, 299)
+
+          if (eventStatus === MatchStatus.FINISHED) {
+            return <PastMatch key={payload.id + index} matchId={payload.id} />
+          } else if (eventStatus === MatchStatus.READY) {
+            return (
+              <Counter
+                key={payload.id + index}
+                matchId={payload.id}
+                targetDateTime={targetDateTime}
+              />
+            )
+          }
+        }
+      )}
     </List>
   )
 }
