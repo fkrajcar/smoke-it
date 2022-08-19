@@ -1,6 +1,5 @@
-import { useTheme } from '@mui/material'
+import { LinearProgress, useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Image from 'next/image'
@@ -56,11 +55,11 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
       <ListItem
         sx={{
           minWidth: '100%',
-          minHeight: '64px',
+          minHeight: '118px',
           justifyContent: 'center',
         }}
       >
-        <CircularProgress />
+        <LinearProgress />
       </ListItem>
     )
   }
@@ -71,7 +70,7 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
         src={`/${match.round_stats.Map}.jpg`}
         alt={`${match.round_stats.Map} map`}
         width={200}
-        height={100}
+        height={113}
       />
       <Box
         sx={{

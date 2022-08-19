@@ -10,7 +10,7 @@ interface EventsListProps {
   events: IEvent[]
 }
 
-export const EventsList = ({ events }: EventsListProps) => {
+const EventsList = ({ events }: EventsListProps) => {
   if (!events.length) {
     return null
   }
@@ -39,3 +39,5 @@ export const EventsList = ({ events }: EventsListProps) => {
     </List>
   )
 }
+
+export default EventsList

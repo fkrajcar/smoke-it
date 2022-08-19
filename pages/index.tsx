@@ -1,6 +1,6 @@
 import Container from '@mui/material/Container'
 
-import { EventsList } from '../components/EventsList'
+import EventsList from '../components/EventsList'
 import dbConnect from '../util/dbConnect'
 import { Event, IEvent, MatchStatus } from './api/models/Events'
 
