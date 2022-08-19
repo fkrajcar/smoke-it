@@ -10,7 +10,7 @@ export const enum MatchStatus {
 }
 
 export interface Player {
-  id: string
+  player_id: string
   nickname: string
   avatar: string
   game_name: string

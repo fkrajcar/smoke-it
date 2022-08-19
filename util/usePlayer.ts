@@ -3,9 +3,9 @@ import useSWRImmutable from 'swr/immutable'
 import { config } from '../config/misc'
 import { fetcher } from './fetcher'
 
-export function useMatch(matchId: string) {
+export function usePlayer(playerId: string) {
   const { data, error } = useSWRImmutable(
-    `${config.FACEIT_API_URL_BASE}/matches/${matchId}`,
+    `${config.FACEIT_API_URL_BASE}/players/${playerId}`,
     fetcher
   )
 
