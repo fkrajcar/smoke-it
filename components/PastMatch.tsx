@@ -121,12 +121,12 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
 
   return (
     <SmokeListItemButton matchId={matchId} pastMatch>
-      <Image
+      {/* <Image
         src={`/${match.round_stats.Map}.jpg`}
         alt={`${match.round_stats.Map} map`}
         width={200}
         height={113}
-      />
+      /> */}
       <Box
         sx={{
           display: 'flex',
