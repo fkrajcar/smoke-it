@@ -101,6 +101,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
           minWidth: '100%',
           justifyContent: 'center',
         }}
+        disablePadding
       >
         <Box
           sx={{
@@ -108,9 +109,8 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: '131px',
-            borderRadius: 1,
-            border: `1px solid ${theme.palette.divider}`,
+            minHeight: '113px',
+            borderBottom: `1px solid ${theme.palette.divider}`,
           }}
         >
           <CircularProgress />
@@ -181,9 +181,12 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
           }}
         >
           {playersStats.map(
-            ({ avatar, kills, kd, nickname }: PlayerWithStats) => (
+            (
+              { avatar, kills, kd, nickname }: PlayerWithStats,
+              index: number
+            ) => (
               <Box
-                key={nickname}
+                key={nickname + index}
                 sx={{
                   display: 'flex',
                   flexDirection: 'row',

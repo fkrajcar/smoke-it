@@ -31,7 +31,7 @@ export const Counter = ({ targetDateTime, matchId }: CounterProps) => {
   }
 
   return (
-    <SmokeListItemButton matchId={matchId} divider counter danger={isDanger}>
+    <SmokeListItemButton matchId={matchId} counter danger={isDanger}>
       <Box sx={{ display: 'flex', justfyContent: 'center', marginBottom: 1 }}>
         <ListItemText sx={sx} disableTypography primary={minutes} />
         <ListItemText sx={sx} disableTypography primary={':'} />

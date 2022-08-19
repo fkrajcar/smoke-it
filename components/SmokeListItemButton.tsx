@@ -23,7 +23,18 @@ const SmokeListItemButton = ({
   const theme = useTheme()
 
   return (
-    <ListItem divider={divider}>
+    <ListItem
+      divider={divider}
+      disablePadding={!counter}
+      sx={{
+        ...(counter && {
+          position: 'sticky',
+          top: 0,
+          backgroundColor: theme.palette.background.default,
+          zIndex: 1,
+        }),
+      }}
+    >
       <ListItemButton
         component="a"
         target="_blank"
@@ -32,14 +43,18 @@ const SmokeListItemButton = ({
           pastMatch ? '/scoreboard' : ''
         }`}
         sx={{
-          borderRadius: 1,
-          border: `1px solid ${
-            counter
-              ? danger
-                ? theme.palette.error.main
-                : theme.palette.primary.light
-              : theme.palette.divider
-          }`,
+          ...(counter
+            ? {
+                border: `1px solid ${
+                  danger
+                    ? theme.palette.error.main
+                    : theme.palette.primary.light
+                }`,
+                borderRadius: 1,
+              }
+            : {
+                borderBottom: `1px solid ${theme.palette.divider}`,
+              }),
           '&:hover': {
             borderColor: theme.palette.primary.light,
           },
