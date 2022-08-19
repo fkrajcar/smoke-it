@@ -20,7 +20,7 @@ export interface PlayerWithStats {
   nickname: string
   avatar: string
   player_stats: PlayerStats
-  kills: number
+  kills: string
   kd: string
 }
 
@@ -66,7 +66,15 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
           nickname: player.nickname,
         }
       })
-      .sort((a: PlayerWithStats, b: PlayerWithStats) => b.kills - a.kills)
+      .sort((a: PlayerWithStats, b: PlayerWithStats) => {
+        const difference = parseInt(b.kills) - parseInt(a.kills)
+
+        if (difference) {
+          return difference
+        }
+
+        return parseFloat(b.kd) - parseFloat(a.kd)
+      })
 
     console.log(playersStats)
     return [playersStats, ourTeam?.team_stats['Team Win'] === '1']
@@ -168,7 +176,6 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'row',
-                  // justifyContent: 'center',
                   alignItems: 'center',
                   marginRight: '10px',
                   paddingRight: '6px',
@@ -176,7 +183,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
                 }}
               >
                 <Avatar
-                  sx={{ width: 24, height: 24 }}
+                  sx={{ width: 28, height: 28 }}
                   alt={nickname}
                   src={avatar}
                 />
@@ -201,7 +208,12 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
                     }}
                   >
                     <ListItemText
-                      sx={{ flex: 'unset', marginRight: '4px' }}
+                      sx={{
+                        flex: 'unset',
+                        marginRight: '4px',
+                        fontWeight: 'bold',
+                      }}
+                      disableTypography
                       primary={kills}
                     />
                     <Image
@@ -211,8 +223,14 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
                       height={18}
                     />
                   </Box>
-
-                  <ListItemText primary={kd + ' K/D'} />
+                  <ListItemText
+                    sx={{
+                      fontWeight: 'bold',
+                    }}
+                    disableTypography
+                    primary={`${kd} `}
+                  />
+                  <ListItemText primary={'  K/D'} />
                 </Box>
               </Box>
             )
