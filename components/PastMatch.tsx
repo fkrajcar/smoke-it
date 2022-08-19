@@ -1,4 +1,4 @@
-import { LinearProgress, useTheme } from '@mui/material'
+import { CircularProgress, useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -55,11 +55,22 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
       <ListItem
         sx={{
           minWidth: '100%',
-          minHeight: '118px',
           justifyContent: 'center',
         }}
       >
-        <LinearProgress />
+        <Box
+          sx={{
+            display: 'flex',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '131px',
+            borderRadius: 1,
+            border: `1px solid ${theme.palette.divider}`,
+          }}
+        >
+          <CircularProgress />
+        </Box>
       </ListItem>
     )
   }
