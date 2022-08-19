@@ -2,7 +2,7 @@ import '../styles/globals.scss'
 
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@mui/material/styles'
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 

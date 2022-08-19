@@ -1,5 +1,6 @@
-import { CircularProgress, useTheme } from '@mui/material'
+import { useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Image from 'next/image'

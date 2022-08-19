@@ -1,6 +1,6 @@
 import List from '@mui/material/List'
-import { addSeconds, parseISO } from 'date-fns'
-import React from 'react'
+import addSeconds from 'date-fns/addSeconds'
+import parseISO from 'date-fns/parseISO'
 
 import { IEvent, MatchStatus } from '../pages/api/models/Events'
 import { Counter } from './Counter'
