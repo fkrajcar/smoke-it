@@ -76,7 +76,7 @@ export const PastMatch = ({ matchId }: PastMatchProps) => {
   }
 
   return (
-    <SmokeListItemButton matchId={matchId}>
+    <SmokeListItemButton matchId={matchId} pastMatch>
       <Image
         src={`/${match.round_stats.Map}.jpg`}
         alt={`${match.round_stats.Map} map`}

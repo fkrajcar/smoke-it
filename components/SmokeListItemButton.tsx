@@ -9,6 +9,7 @@ interface SmokeListItemButtonProps {
   divider?: boolean
   counter?: boolean
   danger?: boolean
+  pastMatch?: boolean
 }
 
 const SmokeListItemButton = ({
@@ -17,6 +18,7 @@ const SmokeListItemButton = ({
   matchId,
   danger,
   children,
+  pastMatch,
 }: SmokeListItemButtonProps) => {
   const theme = useTheme()
 
@@ -26,7 +28,9 @@ const SmokeListItemButton = ({
         component="a"
         target="_blank"
         rel="noreferrer"
-        href={`https://www.faceit.com/en/csgo/room/${matchId}`}
+        href={`https://www.faceit.com/en/csgo/room/${matchId}${
+          pastMatch ? '/scoreboard' : ''
+        }`}
         sx={{
           borderRadius: 1,
           border: `1px solid ${
