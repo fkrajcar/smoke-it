@@ -76,7 +76,6 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
         return parseFloat(b.kd) - parseFloat(a.kd)
       })
 
-    console.log(playersStats)
     return [playersStats, ourTeam?.team_stats['Team Win'] === '1']
   }, [match, getAvatar])
 
@@ -109,7 +108,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: '113px',
+            minHeight: '129px',
             borderBottom: `1px solid ${theme.palette.divider}`,
           }}
         >
@@ -135,7 +134,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
           src={`/${match.round_stats.Map}.jpg`}
           alt={`${match.round_stats.Map} map`}
           width={200}
-          height={113}
+          height={129}
         />
       </Box>
       <Box

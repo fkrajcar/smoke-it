@@ -60,6 +60,8 @@ const SmokeListItemButton = ({
           },
           justifyContent: 'center',
           flexDirection: counter ? 'column' : 'row',
+          paddingTop: '16px',
+          paddingBottom: '16px',
         }}
       >
         {children}
