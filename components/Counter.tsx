@@ -3,16 +3,19 @@ import LinearProgress from '@mui/material/LinearProgress'
 import ListItemText from '@mui/material/ListItemText'
 import { useMemo } from 'react'
 
+import { getTargetDateTimeIsoString } from '../util/getTargetDateTimeIsoString'
 import { useCountdown } from '../util/useCountdown'
 import SmokeListItemButton from './SmokeListItemButton'
 
 interface CounterProps {
-  targetDateTime: Date
+  targetTimestamp: string
   matchId: string
 }
 
-export const Counter = ({ targetDateTime, matchId }: CounterProps) => {
-  const [, , minutes, seconds] = useCountdown(targetDateTime.toISOString())
+export const Counter = ({ targetTimestamp, matchId }: CounterProps) => {
+  const [, , minutes, seconds] = useCountdown(
+    getTargetDateTimeIsoString(targetTimestamp)
+  )
 
   const isDanger = useMemo(() => minutes <= 0, [minutes])
   const progress = useMemo(

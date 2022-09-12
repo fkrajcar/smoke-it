@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { useCallback, useMemo } from 'react'
 
 import { config } from '../config/misc'

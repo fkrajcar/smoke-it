@@ -1,29 +1,45 @@
 import Container from '@mui/material/Container'
 
+import { Counter } from '../components/Counter'
 import EventsList from '../components/EventsList'
 import dbConnect from '../util/dbConnect'
 import { Event, IEvent, MatchStatus } from './api/models/Events'
 
 interface IProps {
-  events: IEvent[]
+  finishedMatches: IEvent[]
+  readyMatch: IEvent
 }
 
-const Index = ({ events }: IProps) => (
+const Index = ({ finishedMatches, readyMatch }: IProps) => (
   <Container disableGutters>
-    <EventsList events={events} />
+    {readyMatch?.payload?.id && (
+      <Counter
+        matchId={readyMatch.payload.id}
+        targetTimestamp={readyMatch.timestamp}
+      />
+    )}
+
+    <EventsList events={finishedMatches} />
   </Container>
 )
 
 export async function getServerSideProps() {
   await dbConnect()
 
-  const response = await Event.find({
-    event: { $in: [MatchStatus.READY, MatchStatus.FINISHED] },
-  }).sort({ timestamp: -1 })
+  const finishedMatchesResponse = await Event.find({
+    event: MatchStatus.FINISHED,
+  })
+    .limit(10)
+    .sort({ timestamp: -1 })
 
-  const events = JSON.parse(JSON.stringify(response))
+  const readyMatchResponse = await Event.findOne({
+    event: MatchStatus.READY,
+  }).sort('-_id')
 
-  return { props: { events } }
+  const finishedMatches = JSON.parse(JSON.stringify(finishedMatchesResponse))
+  const readyMatch = JSON.parse(JSON.stringify(readyMatchResponse))
+
+  return { props: { finishedMatches, readyMatch } }
 }
 
 export default Index
