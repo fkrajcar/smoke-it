@@ -23,7 +23,7 @@ const Index = ({ finishedMatches, readyMatch }: IProps) => (
   </Container>
 )
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   await dbConnect()
 
   const finishedMatchesResponse = await Event.find({

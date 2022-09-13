@@ -1,5 +1,4 @@
 import { useTheme } from '@mui/material'
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import ListItem from '@mui/material/ListItem'
@@ -195,10 +194,12 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
                   justifyContent: 'flex-start',
                 }}
               >
-                <Avatar
-                  sx={{ width: 28, height: 28 }}
-                  alt={nickname}
+                <Image
                   src={avatar}
+                  width={28}
+                  height={28}
+                  alt={`${nickname} avatar`}
+                  style={{ borderRadius: '50%' }}
                 />
                 <Box
                   key={nickname}
