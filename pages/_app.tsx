@@ -30,6 +30,10 @@ function MyApp({
         />
         <title>SmokeIt</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta
+          name="description"
+          content="App for tracking FaceIt running match status. Developer: https://github.com/fkrajcar"
+        />
       </Head>
 
       <ThemeProvider theme={theme}>
