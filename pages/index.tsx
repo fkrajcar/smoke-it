@@ -32,9 +32,11 @@ export async function getStaticProps() {
     .limit(10)
     .sort({ timestamp: -1 })
 
-  const readyMatchResponse = await Event.findOne({
+  const readyMatchResponse = await Event.find({
     event: MatchStatus.READY,
-  }).sort('-_id')
+  })
+    .sort({ _id: -1 })
+    .limit(1)
 
   const finishedMatches = JSON.parse(JSON.stringify(finishedMatchesResponse))
   const readyMatch = JSON.parse(JSON.stringify(readyMatchResponse))
