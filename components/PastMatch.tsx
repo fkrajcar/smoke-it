@@ -174,7 +174,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
           sx={{
             flexDirection: 'row',
             maxHeight: '96px',
-            overflow: 'scroll',
+            overflowY: 'scroll',
             [theme.breakpoints.down('md')]: {
               flexDirection: 'column',
             },
