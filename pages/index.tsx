@@ -26,15 +26,16 @@ const Index = ({ finishedMatches, readyMatch }: IProps) => (
 export async function getServerSideProps() {
   await dbConnect()
 
-  const finishedMatchesResponse = await Event.find({
-    event: MatchStatus.FINISHED,
-  })
-    .sort({ timestamp: -1 })
-    .limit(10)
-
-  const readyMatchResponse = await Event.findOne({
-    event: MatchStatus.READY,
-  }).sort({ _id: -1 })
+  const [finishedMatchesResponse, readyMatchResponse] = await Promise.all([
+    Event.find({
+      event: MatchStatus.FINISHED,
+    })
+      .sort({ timestamp: -1 })
+      .limit(10),
+    Event.findOne({
+      event: MatchStatus.READY,
+    }).sort({ _id: -1 }),
+  ])
 
   const finishedMatches = JSON.parse(JSON.stringify(finishedMatchesResponse))
   const readyMatch = JSON.parse(JSON.stringify(readyMatchResponse))

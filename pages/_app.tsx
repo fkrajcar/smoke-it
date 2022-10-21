@@ -3,6 +3,7 @@ import '../styles/globals.scss'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
@@ -19,6 +20,7 @@ function MyApp({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) {
+  const queryClient = new QueryClient()
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -38,7 +40,9 @@ function MyApp({
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </ThemeProvider>
     </CacheProvider>
   )

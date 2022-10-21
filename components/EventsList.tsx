@@ -1,37 +1,47 @@
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 import List from '@mui/material/List'
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
-import { config } from '../config/misc'
 import { IEvent } from '../pages/api/models/Events'
-import { fetcher } from '../util/fetcher'
-import { PastMatch, PlayerWithStats } from './PastMatch'
-
+import MatchService from '../pages/api/utils/matchService'
+import { PastMatch } from './PastMatch'
 interface EventsListProps {
   events: IEvent[]
 }
 
 const EventsList = ({ events }: EventsListProps) => {
-  const [players, setPlayers] = useState<PlayerWithStats[]>([])
-
-  useEffect(() => {
-    getPlayers()
-  }, [])
-
-  const getPlayers = async () => {
-    const players = []
-
-    for await (const playerId of Object.values(config.PLAYER_IDS)) {
-      const player = await fetcher(
-        config.FACEIT_API_URL_BASE + '/players/' + playerId
-      )
-
-      players.push(player)
+  const { data: players, isLoading } = useQuery(
+    ['players'],
+    () => MatchService.getPlayers(),
+    {
+      // time until stale data is garbage collected
+      cacheTime: 60 * 1000,
+      // time until data becomes stale
+      staleTime: 30 * 1000,
+      // and many more
     }
+  )
 
-    setPlayers(players)
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          height: '100vh',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <CircularProgress sx={{ marginBottom: '20px' }} />
+        <span>Loading matches</span>
+      </Box>
+    )
   }
 
-  if (!events.length || !players.length) {
+  if (!events?.length || !players?.length) {
     return null
   }
 
