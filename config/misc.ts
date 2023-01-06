@@ -7,5 +7,6 @@ export const config = {
     vuki656: '1f261d02-853d-40e8-aed3-fe85deb006a2',
     edo215: 'f8b02166-0a21-4a9f-abd5-b2ce47350895',
     sidr00n: '9087a0bb-3c68-43dc-a1d8-b49614ab9771',
+    rok: '3b8e55b2-e9c2-4553-8fd5-a29821df26f3',
   },
 }
