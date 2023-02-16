@@ -44,7 +44,7 @@ export const Counter = ({ targetTimestamp, matchId }: CounterProps) => {
             ...(isDanger && { color: 'red' }),
           }}
           disableTypography
-          primary={seconds}
+          primary={seconds < 10 ? `0${seconds}` : seconds}
         />
       </Box>
       <Box sx={{ width: '100%' }}>

@@ -61,7 +61,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
         return {
           avatar: getAvatar(player.player_id),
           kills: player.player_stats.Kills,
-          kd: player.player_stats['K/D Ratio'],
+          kd: parseFloat(player.player_stats['K/D Ratio']).toFixed(2),
           nickname: player.nickname,
         }
       })
@@ -229,6 +229,8 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
                         flex: 'unset',
                         marginRight: '4px',
                         fontWeight: 'bold',
+                        minWidth: '19px',
+                        textAlign: ' right',
                       }}
                       disableTypography
                       primary={kills}
