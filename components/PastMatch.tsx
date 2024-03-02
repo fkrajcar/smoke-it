@@ -181,7 +181,7 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
             },
           }}
         >
-          {playersStats.map(
+          {playersStats?.map(
             (
               { avatar, kills, kd, nickname }: PlayerWithStats,
               index: number
