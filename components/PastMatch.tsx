@@ -117,6 +117,10 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
     )
   }
 
+  if (!playersStats?.length) {
+    return null
+  }
+
   return (
     <SmokeListItemButton matchId={matchId} pastMatch>
       <Box

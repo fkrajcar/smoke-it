@@ -37,7 +37,15 @@ export async function getServerSideProps() {
     }).sort({ _id: -1 }),
   ])
 
-  const finishedMatches = JSON.parse(JSON.stringify(finishedMatchesResponse))
+  // unique matches
+  const finishedMatches = JSON.parse(
+    JSON.stringify(finishedMatchesResponse)
+  ).filter(
+    ({ payload: payloudOut }: IEvent, index: number, self: IEvent[]) =>
+      index ===
+      self?.findIndex(({ payload }: IEvent) => payload?.id === payloudOut?.id)
+  )
+
   const readyMatch = JSON.parse(JSON.stringify(readyMatchResponse))
 
   return { props: { finishedMatches, readyMatch } }
