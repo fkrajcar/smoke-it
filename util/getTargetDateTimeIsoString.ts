@@ -4,5 +4,5 @@ import parseISO from 'date-fns/parseISO'
 export const getTargetDateTimeIsoString = (timestamp: string) => {
   const date = parseISO(timestamp)
 
-  return addSeconds(date, 299).toISOString()
+  return addSeconds(date, 179).toISOString()
 }
