@@ -19,7 +19,6 @@ const EventsList = ({ events }: EventsListProps) => {
       cacheTime: 60 * 1000,
       // time until data becomes stale
       staleTime: 30 * 1000,
-      // and many more
     }
   )
 

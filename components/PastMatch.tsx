@@ -62,7 +62,11 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
     const we = ourTeam?.players?.filter((player: PlayerWithStats) =>
       Object.values(config.PLAYER_IDS).includes(player.player_id)
     )
-    console.log({ match })
+
+    if (!match) {
+      return [null, null]
+    }
+
     const playersStats = we
       ?.map((player: PlayerWithStats) => {
         return {
