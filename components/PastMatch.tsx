@@ -10,9 +10,16 @@ import { config } from '../config/misc'
 import { useMatchStats } from '../util/useMatchStats'
 import SmokeListItemButton from './SmokeListItemButton'
 
+enum StatsProperties {
+  Kills = 'Kills',
+  KD = 'K/D Ratio',
+  TeamWin = 'Team Win',
+  Win = '1',
+}
+
 interface PlayerStats {
-  Kills: number
-  'K/D Ratio': string
+  [StatsProperties.Kills]: number
+  [StatsProperties.KD]: string
 }
 export interface PlayerWithStats {
   player_id: string
@@ -55,13 +62,13 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
     const we = ourTeam?.players?.filter((player: PlayerWithStats) =>
       Object.values(config.PLAYER_IDS).includes(player.player_id)
     )
-
+    console.log({ match })
     const playersStats = we
       ?.map((player: PlayerWithStats) => {
         return {
           avatar: getAvatar(player.player_id),
           kills: player.player_stats.Kills,
-          kd: parseFloat(player.player_stats['K/D Ratio']).toFixed(2),
+          kd: parseFloat(player.player_stats[StatsProperties.KD]).toFixed(2),
           nickname: player.nickname,
         }
       })
@@ -75,7 +82,10 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
         return parseFloat(b.kd) - parseFloat(a.kd)
       })
 
-    return [playersStats, ourTeam?.team_stats['Team Win'] === '1']
+    return [
+      playersStats,
+      ourTeam?.team_stats[StatsProperties.TeamWin] === StatsProperties.Win,
+    ]
   }, [match, getAvatar])
 
   if (error) {
