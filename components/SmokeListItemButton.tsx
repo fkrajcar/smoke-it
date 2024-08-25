@@ -12,7 +12,7 @@ interface SmokeListItemButtonProps {
   pastMatch?: boolean
 }
 
-const SmokeListItemButton = ({
+export const SmokeListItemButton = ({
   counter,
   divider,
   matchId,
@@ -69,5 +69,3 @@ const SmokeListItemButton = ({
     </ListItem>
   )
 }
-
-export default SmokeListItemButton

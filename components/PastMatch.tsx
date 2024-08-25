@@ -5,11 +5,12 @@ import Image from 'next/future/image'
 import { useCallback, useMemo } from 'react'
 
 import { config } from '../config/misc'
+import { isoToFormat } from '../util/dateTimeHelpers'
 import { useMatchStats } from '../util/useMatchStats'
 import { ErrorState } from './ErrorState'
 import { LoadingState } from './LoadingState'
 import { PlayerStatsItem } from './PlayerStats'
-import SmokeListItemButton from './SmokeListItemButton'
+import { SmokeListItemButton } from './SmokeListItemButton'
 
 enum StatsProperties {
   Kills = 'Kills',
@@ -39,9 +40,10 @@ interface Team {
 interface PastMatchProps {
   matchId: string
   players: PlayerWithStats[]
+  updatedAt: string
 }
 
-export const PastMatch = ({ matchId, players }: PastMatchProps) => {
+export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
   const { data, error, isLoading } = useMatchStats(matchId)
   const theme = useTheme()
 
@@ -139,6 +141,16 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
               color: isWin
                 ? theme.palette.success.main
                 : theme.palette.error.main,
+            }}
+          />
+          <ListItemText
+            primaryTypographyProps={{ fontSize: '0.75rem' }}
+            primary={isoToFormat(updatedAt)}
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: 4,
+              fontSize: 12,
             }}
           />
         </Box>

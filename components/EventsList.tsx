@@ -11,6 +11,8 @@ interface EventsListProps {
 }
 
 const EventsList = ({ events }: EventsListProps) => {
+  console.log({ events })
+
   const { data: players, isLoading } = useQuery(
     ['players'],
     () => MatchService.getPlayers(),
@@ -45,12 +47,13 @@ const EventsList = ({ events }: EventsListProps) => {
   }
 
   return (
-    <List>
+    <List disablePadding={true}>
       {events.map(({ payload }: IEvent, index: number) => (
         <PastMatch
           key={payload.id + index}
           matchId={payload.id}
           players={players}
+          updatedAt={payload.updated_at}
         />
       ))}
     </List>
