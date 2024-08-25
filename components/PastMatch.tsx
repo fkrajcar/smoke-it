@@ -1,13 +1,14 @@
 import { useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
-import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Image from 'next/future/image'
 import { useCallback, useMemo } from 'react'
 
 import { config } from '../config/misc'
 import { useMatchStats } from '../util/useMatchStats'
+import { ErrorState } from './ErrorState'
+import { LoadingState } from './LoadingState'
+import { PlayerStatsItem } from './PlayerStats'
 import SmokeListItemButton from './SmokeListItemButton'
 
 enum StatsProperties {
@@ -21,6 +22,7 @@ interface PlayerStats {
   [StatsProperties.Kills]: number
   [StatsProperties.KD]: string
 }
+
 export interface PlayerWithStats {
   player_id: string
   nickname: string
@@ -33,6 +35,7 @@ export interface PlayerWithStats {
 interface Team {
   players: PlayerWithStats[]
 }
+
 interface PastMatchProps {
   matchId: string
   players: PlayerWithStats[]
@@ -40,51 +43,41 @@ interface PastMatchProps {
 
 export const PastMatch = ({ matchId, players }: PastMatchProps) => {
   const { data, error, isLoading } = useMatchStats(matchId)
-
   const theme = useTheme()
 
   const match = useMemo(() => data?.rounds?.[0], [data])
 
   const getAvatar = useCallback(
-    (playerId: string) => {
-      return players?.find(({ player_id }) => player_id === playerId)?.avatar
-    },
+    (playerId: string) =>
+      players?.find(({ player_id }) => player_id === playerId)?.avatar,
     [players]
   )
 
   const [playersStats, isWin] = useMemo(() => {
-    const ourTeam = match?.teams?.find((team: Team) => {
-      return team?.players.find((player: PlayerWithStats) =>
+    if (!match) return [null, null]
+
+    const ourTeam = match?.teams?.find((team: Team) =>
+      team?.players.some((player: PlayerWithStats) =>
         Object.values(config.PLAYER_IDS).includes(player.player_id)
       )
-    })
+    )
 
     const we = ourTeam?.players?.filter((player: PlayerWithStats) =>
       Object.values(config.PLAYER_IDS).includes(player.player_id)
     )
 
-    if (!match) {
-      return [null, null]
-    }
-
-    const playersStats = we
-      ?.map((player: PlayerWithStats) => {
-        return {
-          avatar: getAvatar(player.player_id),
-          kills: player.player_stats.Kills,
-          kd: parseFloat(player.player_stats[StatsProperties.KD]).toFixed(2),
-          nickname: player.nickname,
-        }
-      })
-      .sort((a: PlayerWithStats, b: PlayerWithStats) => {
-        const difference = parseInt(b.kills) - parseInt(a.kills)
-
-        if (difference) {
-          return difference
-        }
-
-        return parseFloat(b.kd) - parseFloat(a.kd)
-      })
+    const playersStats: PlayerWithStats[] = we
+      ?.map((player: PlayerWithStats) => ({
+        avatar: getAvatar(player.player_id),
+        kills: player.player_stats.Kills,
+        kd: parseFloat(player.player_stats[StatsProperties.KD]).toFixed(2),
+        nickname: player.nickname,
+      }))
+      .sort(
+        (a: PlayerWithStats, b: PlayerWithStats) =>
+          parseInt(b.kills) - parseInt(a.kills) ||
+          parseFloat(b.kd) - parseFloat(a.kd)
+      )
 
     return [
       playersStats,
@@ -92,48 +85,9 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
     ]
   }, [match, getAvatar])
 
-  if (error) {
-    return (
-      <ListItem
-        sx={{
-          minWidth: '100%',
-          minHeight: '64px',
-          justifyContent: 'center',
-        }}
-      >
-        <ListItemText primary="No matches found :(" />
-      </ListItem>
-    )
-  }
-
-  if (isLoading) {
-    return (
-      <ListItem
-        sx={{
-          minWidth: '100%',
-          justifyContent: 'center',
-        }}
-        disablePadding
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '129px',
-            borderBottom: `1px solid ${theme.palette.divider}`,
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      </ListItem>
-    )
-  }
-
-  if (!playersStats?.length) {
-    return null
-  }
+  if (error) return <ErrorState />
+  if (isLoading) return <LoadingState />
+  if (!playersStats?.length) return null
 
   return (
     <SmokeListItemButton matchId={matchId} pastMatch>
@@ -199,79 +153,9 @@ export const PastMatch = ({ matchId, players }: PastMatchProps) => {
             },
           }}
         >
-          {playersStats?.map(
-            (
-              { avatar, kills, kd, nickname }: PlayerWithStats,
-              index: number
-            ) => (
-              <Box
-                key={nickname + index}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginRight: '10px',
-                  paddingRight: '6px',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                <Image
-                  src={avatar}
-                  width={28}
-                  height={28}
-                  alt={`${nickname} avatar`}
-                  style={{ borderRadius: '50%' }}
-                />
-                <Box
-                  key={nickname}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginLeft: '8px',
-                  }}
-                >
-                  <Box
-                    key={nickname}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRight: `1px solid ${theme.palette.divider}`,
-                      paddingRight: '6px',
-                      marginRight: '6px',
-                    }}
-                  >
-                    <ListItemText
-                      sx={{
-                        flex: 'unset',
-                        marginRight: '4px',
-                        fontWeight: 'bold',
-                        minWidth: '19px',
-                        textAlign: ' right',
-                      }}
-                      disableTypography
-                      primary={kills}
-                    />
-                    <Image
-                      alt="death icon"
-                      src={'/death.svg'}
-                      width={18}
-                      height={18}
-                    />
-                  </Box>
-                  <ListItemText
-                    sx={{
-                      fontWeight: 'bold',
-                    }}
-                    disableTypography
-                    primary={`${kd} `}
-                  />
-                  <ListItemText primary={'  K/D'} />
-                </Box>
-              </Box>
-            )
-          )}
+          {playersStats?.map((player: PlayerWithStats, index: number) => (
+            <PlayerStatsItem key={player.nickname + index} {...player} />
+          ))}
         </Box>
       </Box>
     </SmokeListItemButton>

@@ -19,10 +19,10 @@ async function dbConnect() {
 
       console.log('Connected to mongoDB: ', !!db.connections[0].readyState)
     } else {
-      console.log('.env file not found!')
+      console.error('.env file not found!')
     }
   } catch (e) {
-    console.log('Error connecting to mongoDB: ', e)
+    console.error('Error connecting to mongoDB: ', e)
   }
 }
 
