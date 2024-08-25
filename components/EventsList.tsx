@@ -11,8 +11,6 @@ interface EventsListProps {
 }
 
 const EventsList = ({ events }: EventsListProps) => {
-  console.log({ events })
-
   const { data: players, isLoading } = useQuery(
     ['players'],
     () => MatchService.getPlayers(),
