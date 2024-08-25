@@ -144,13 +144,12 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
             }}
           />
           <ListItemText
-            primaryTypographyProps={{ fontSize: '0.75rem' }}
+            primaryTypographyProps={{ fontSize: '0.625rem' }}
             primary={isoToFormat(updatedAt)}
             sx={{
               position: 'absolute',
               bottom: 0,
               left: 4,
-              fontSize: 12,
             }}
           />
         </Box>
