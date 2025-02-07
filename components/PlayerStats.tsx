@@ -6,6 +6,8 @@ import { PlayerWithStats } from './PastMatch'
 export const PlayerStatsItem = ({
   avatar,
   kills,
+  assists,
+  deaths,
   kd,
   nickname,
 }: PlayerWithStats) => {
@@ -68,11 +70,12 @@ export const PlayerStatsItem = ({
         <ListItemText
           sx={{
             fontWeight: 'bold',
+            color:
+              kd < 1 ? theme.palette.error.main : theme.palette.success.main,
           }}
           disableTypography
-          primary={`${kd} `}
+          primary={`${kd}`}
         />
-        <ListItemText primary={'  K/D'} />
       </Box>
     </Box>
   )

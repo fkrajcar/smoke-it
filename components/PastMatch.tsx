@@ -14,6 +14,8 @@ import { SmokeListItemButton } from './SmokeListItemButton'
 
 enum StatsProperties {
   Kills = 'Kills',
+  Assists = 'Assists',
+  Deaths = 'Deaths',
   KD = 'K/D Ratio',
   TeamWin = 'Team Win',
   Win = '1',
@@ -21,6 +23,8 @@ enum StatsProperties {
 
 interface PlayerStats {
   [StatsProperties.Kills]: number
+  [StatsProperties.Assists]: number
+  [StatsProperties.Deaths]: number
   [StatsProperties.KD]: string
 }
 
@@ -29,8 +33,10 @@ export interface PlayerWithStats {
   nickname: string
   avatar: string
   player_stats: PlayerStats
-  kills: string
-  kd: string
+  kills: number
+  assists: number
+  deaths: number
+  kd: number
 }
 
 interface Team {
@@ -72,13 +78,14 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
       ?.map((player: PlayerWithStats) => ({
         avatar: getAvatar(player.player_id),
         kills: player.player_stats.Kills,
+        assists: player.player_stats.Assists,
+        deaths: player.player_stats.Deaths,
         kd: parseFloat(player.player_stats[StatsProperties.KD]).toFixed(2),
         nickname: player.nickname,
       }))
       .sort(
         (a: PlayerWithStats, b: PlayerWithStats) =>
-          parseInt(b.kills) - parseInt(a.kills) ||
-          parseFloat(b.kd) - parseFloat(a.kd)
+          b.kills - a.kills || b.kd - a.kd
       )
 
     return [
