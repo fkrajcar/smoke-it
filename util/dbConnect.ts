@@ -3,6 +3,8 @@ import { connect, Mongoose } from 'mongoose'
 let isConnected = false
 
 async function dbConnect() {
+  console.log('Connecting to mongoDB...')
+
   if (isConnected) {
     console.log('Already connected to mongoDB.')
 
