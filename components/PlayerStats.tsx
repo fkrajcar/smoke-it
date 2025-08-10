@@ -10,6 +10,7 @@ export const PlayerStatsItem = ({
   deaths,
   kd,
   nickname,
+  ADR,
 }: PlayerWithStats) => {
   const theme = useTheme()
   return (
@@ -72,10 +73,44 @@ export const PlayerStatsItem = ({
             fontWeight: 'bold',
             color:
               kd < 1 ? theme.palette.error.main : theme.palette.success.main,
+            borderRight: `1px solid ${theme.palette.divider}`,
+            paddingRight: '6px',
           }}
           disableTypography
           primary={`${kd}`}
         />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'baseline',
+          }}
+        >
+          <ListItemText
+            sx={{
+              color:
+                ADR < 70
+                  ? theme.palette.error.main
+                  : theme.palette.success.main,
+              marginLeft: '6px',
+              fontSize: '1rem',
+            }}
+            disableTypography
+            primary={`${ADR}`}
+          />
+          <ListItemText
+            sx={{
+              color:
+                ADR < 70
+                  ? theme.palette.error.main
+                  : theme.palette.success.main,
+              marginLeft: '2px',
+              fontSize: '.75rem',
+            }}
+            disableTypography
+            primary={`ADR`}
+          />
+        </Box>
       </Box>
     </Box>
   )

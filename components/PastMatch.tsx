@@ -19,6 +19,7 @@ enum StatsProperties {
   KD = 'K/D Ratio',
   TeamWin = 'Team Win',
   Win = '1',
+  ADR = 'ADR',
 }
 
 interface PlayerStats {
@@ -26,6 +27,7 @@ interface PlayerStats {
   [StatsProperties.Assists]: number
   [StatsProperties.Deaths]: number
   [StatsProperties.KD]: string
+  [StatsProperties.ADR]: number
 }
 
 export interface PlayerWithStats {
@@ -37,6 +39,7 @@ export interface PlayerWithStats {
   assists: number
   deaths: number
   kd: number
+  ADR: number
 }
 
 interface Team {
@@ -74,7 +77,7 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
     const we = ourTeam?.players?.filter((player: PlayerWithStats) =>
       Object.values(config.PLAYER_IDS).includes(player.player_id)
     )
-
+    console.log({ we })
     const playersStats: PlayerWithStats[] = we
       ?.map((player: PlayerWithStats) => ({
         avatar: getAvatar(player.player_id),
@@ -83,6 +86,7 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
         deaths: player.player_stats.Deaths,
         kd: parseFloat(player.player_stats[StatsProperties.KD]).toFixed(2),
         nickname: player.nickname,
+        ADR: player.player_stats.ADR,
       }))
       .sort(
         (a: PlayerWithStats, b: PlayerWithStats) =>
