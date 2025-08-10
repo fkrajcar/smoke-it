@@ -8,7 +8,7 @@ export const getTargetDateTimeIsoString = (timestamp: string) => {
 
 export const isoToFormat = (
   dateString: number,
-  customFormat = 'dd/MM/yy HH:mm'
+  customFormat = 'dd.MM.yy. HH:mm'
 ) => {
   const utcDate = fromUnixTime(dateString)
 
