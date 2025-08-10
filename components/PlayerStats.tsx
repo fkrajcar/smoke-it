@@ -6,8 +6,6 @@ import { PlayerWithStats } from './PastMatch'
 export const PlayerStatsItem = ({
   avatar,
   kills,
-  assists,
-  deaths,
   kd,
   nickname,
   ADR,
