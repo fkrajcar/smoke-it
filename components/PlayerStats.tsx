@@ -18,7 +18,6 @@ export const PlayerStatsItem = ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginRight: '10px',
         paddingRight: '6px',
         justifyContent: 'flex-start',
       }}
