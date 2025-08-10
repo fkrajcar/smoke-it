@@ -46,11 +46,12 @@ interface Team {
 interface PastMatchProps {
   matchId: string
   players: PlayerWithStats[]
-  updatedAt: string
+  updatedAt: number
 }
 
 export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
   const { data, error, isLoading } = useMatchStats(matchId)
+
   const theme = useTheme()
 
   const match = useMemo(() => data?.rounds?.[0], [data])

@@ -12,4 +12,15 @@ export default class MatchService {
 
     return Promise.all(requests.map((data) => axiosInstance(data)))
   }
+
+  static getPlayerMatches() {
+    const requests = Object.values(config.PLAYER_IDS).map((playerId) => {
+      return {
+        url: `/players/${playerId}/history`,
+        method: 'GET',
+      }
+    })
+
+    return Promise.all(requests.map((data) => axiosInstance(data)))
+  }
 }

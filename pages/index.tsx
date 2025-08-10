@@ -1,54 +1,39 @@
 import Container from '@mui/material/Container'
 
-import { Counter } from '../components/Counter'
 import EventsList from '../components/EventsList'
-import dbConnect from '../util/dbConnect'
-import { Event, IEvent, MatchStatus } from './api/models/Events'
+import { IEvent } from './api/models/Events'
+import MatchService from './api/utils/matchService'
 
 interface IProps {
   finishedMatches: IEvent[]
   readyMatch: IEvent
 }
 
-const Index = ({ finishedMatches, readyMatch }: IProps) => (
+const Index = ({ finishedMatches }: IProps) => (
   <Container disableGutters>
-    {readyMatch?.payload?.id && (
-      <Counter
-        matchId={readyMatch.payload.id}
-        targetTimestamp={readyMatch.timestamp}
-      />
-    )}
-
     <EventsList events={finishedMatches} />
   </Container>
 )
 
 export async function getServerSideProps() {
-  await dbConnect()
+  const matches = await MatchService.getPlayerMatches()
 
-  const [finishedMatchesResponse, readyMatchResponse] = await Promise.all([
-    Event.find({
-      event: MatchStatus.FINISHED,
-    })
-      .sort({ timestamp: -1 })
-      .limit(10),
-    Event.findOne({
-      event: MatchStatus.READY,
-    }).sort({ _id: -1 }),
-  ])
-
-  // unique matches
-  const finishedMatches = JSON.parse(
-    JSON.stringify(finishedMatchesResponse)
-  ).filter(
-    ({ payload: payloudOut }: IEvent, index: number, self: IEvent[]) =>
-      index ===
-      self?.findIndex(({ payload }: IEvent) => payload?.id === payloudOut?.id)
+  // Flatten all match items and add id field
+  const allMatches = matches.flatMap((match) =>
+    match.items.map((item: any) => ({
+      ...item,
+      id: item.match_id,
+    }))
   )
 
-  const readyMatch = JSON.parse(JSON.stringify(readyMatchResponse))
+  // Remove duplicates by id and sort by finished_at in one chain
+  const uniqueMatches = allMatches
+    .filter(
+      (match, index, self) => index === self.findIndex((m) => m.id === match.id)
+    )
+    .sort((a, b) => (b.finished_at || 0) - (a.finished_at || 0))
 
-  return { props: { finishedMatches, readyMatch } }
+  return { props: { finishedMatches: uniqueMatches } }
 }
 
 export default Index

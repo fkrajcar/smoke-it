@@ -1,4 +1,4 @@
-import { addSeconds, format, parseISO } from 'date-fns'
+import { addSeconds, format, fromUnixTime, parseISO } from 'date-fns'
 
 export const getTargetDateTimeIsoString = (timestamp: string) => {
   const date = parseISO(timestamp)
@@ -7,10 +7,10 @@ export const getTargetDateTimeIsoString = (timestamp: string) => {
 }
 
 export const isoToFormat = (
-  dateString: string,
+  dateString: number,
   customFormat = 'dd/MM/yy HH:mm'
 ) => {
-  const utcDate = parseISO(dateString)
+  const utcDate = fromUnixTime(dateString)
 
   return format(utcDate, customFormat)
 }

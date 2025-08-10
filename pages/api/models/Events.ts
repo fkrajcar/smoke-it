@@ -37,6 +37,8 @@ export interface IEventPayload {
 }
 
 export interface IEvent {
+  id: string
+  finished_at: number
   transaction_id: string
   event: string
   event_id: string
