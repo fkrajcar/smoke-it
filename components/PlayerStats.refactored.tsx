@@ -90,7 +90,7 @@ export const PlayerStatsItem: React.FC<PlayerStatsItemProps> = ({
             paddingRight: '6px',
           }}
           disableTypography
-          primary={typeof kd === 'number' ? kd.toFixed(2) : kd}
+          primary={kd.toFixed(2)}
         />
         <Box
           sx={{

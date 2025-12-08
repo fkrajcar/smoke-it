@@ -1,26 +1,20 @@
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import List from '@mui/material/List'
-import { useQuery } from '@tanstack/react-query'
+import React from 'react'
 
-import { IEvent } from '../pages/api/models/Events'
-import MatchService from '../pages/api/utils/matchService'
+import { usePlayers } from '@/src/hooks/usePlayers'
+import { IEvent, Player } from '@/src/types/match.types'
+
+import { ErrorState } from './ErrorState'
 import { PastMatch } from './PastMatch'
+
 interface EventsListProps {
   events: IEvent[]
 }
 
-const EventsList = ({ events }: EventsListProps) => {
-  const { data: players, isLoading } = useQuery(
-    ['players'],
-    () => MatchService.getPlayers(),
-    {
-      // time until stale data is garbage collected
-      cacheTime: 60 * 1000,
-      // time until data becomes stale
-      staleTime: 30 * 1000,
-    }
-  )
+const EventsList: React.FC<EventsListProps> = ({ events }) => {
+  const { players, isLoading, error } = usePlayers()
 
   if (isLoading) {
     return (
@@ -40,18 +34,22 @@ const EventsList = ({ events }: EventsListProps) => {
     )
   }
 
+  if (error) {
+    return <ErrorState />
+  }
+
   if (!events?.length || !players?.length) {
     return null
   }
 
   return (
-    <List disablePadding={true}>
-      {events.map(({ id, finished_at }: IEvent, index: number) => (
+    <List disablePadding>
+      {events.map((event, index) => (
         <PastMatch
-          key={id + index}
-          matchId={id}
-          players={players}
-          updatedAt={finished_at}
+          key={`${event.id}-${index}`}
+          matchId={event.id}
+          players={players as Player[]}
+          updatedAt={event.finished_at}
         />
       ))}
     </List>
