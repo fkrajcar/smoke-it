@@ -1,39 +1,43 @@
 import Container from '@mui/material/Container'
+import { GetServerSideProps } from 'next'
+import React from 'react'
 
-import EventsList from '../components/EventsList'
-import { IEvent } from './api/models/Events'
-import MatchService from './api/utils/matchService'
+import EventsList from '@/components/EventsList'
+import { processMatchHistory } from '@/src/lib/matchHelpers'
+import { MatchService } from '@/src/services/matchService'
+import { IEvent } from '@/src/types/match.types'
 
-interface IProps {
+interface IndexPageProps {
   finishedMatches: IEvent[]
-  readyMatch: IEvent
 }
 
-const Index = ({ finishedMatches }: IProps) => (
+const IndexPage: React.FC<IndexPageProps> = ({ finishedMatches }) => (
   <Container disableGutters>
     <EventsList events={finishedMatches} />
   </Container>
 )
 
-export async function getServerSideProps() {
-  const matches = await MatchService.getPlayerMatches()
+export const getServerSideProps: GetServerSideProps<
+  IndexPageProps
+> = async () => {
+  try {
+    const matches = await MatchService.getPlayerMatches()
+    const uniqueMatches = processMatchHistory(matches)
 
-  // Flatten all match items and add id field
-  const allMatches = matches.flatMap((match) =>
-    match.items.map((item: any) => ({
-      ...item,
-      id: item.match_id,
-    }))
-  )
+    return {
+      props: {
+        finishedMatches: uniqueMatches,
+      },
+    }
+  } catch (error) {
+    console.error('Error fetching matches:', error)
 
-  // Remove duplicates by id and sort by finished_at in one chain
-  const uniqueMatches = allMatches
-    .filter(
-      (match, index, self) => index === self.findIndex((m) => m.id === match.id)
-    )
-    .sort((a, b) => (b.finished_at || 0) - (a.finished_at || 0))
-
-  return { props: { finishedMatches: uniqueMatches } }
+    return {
+      props: {
+        finishedMatches: [],
+      },
+    }
+  }
 }
 
-export default Index
+export default IndexPage

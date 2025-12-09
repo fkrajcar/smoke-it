@@ -1,19 +1,31 @@
 import { Box, ListItemText, useTheme } from '@mui/material'
 import Image from 'next/future/image'
+import React from 'react'
 
-import { PlayerWithStats } from './PastMatch'
+import {
+  IMAGE_DIMENSIONS,
+  PERFORMANCE_THRESHOLDS,
+} from '@/src/constants/config'
 
-export const PlayerStatsItem = ({
+interface PlayerStatsItemProps {
+  avatar?: string
+  kills: number
+  kd: number
+  nickname: string
+  ADR: number
+}
+
+export const PlayerStatsItem: React.FC<PlayerStatsItemProps> = ({
   avatar,
   kills,
   kd,
   nickname,
   ADR,
-}: PlayerWithStats) => {
+}) => {
   const theme = useTheme()
+
   return (
     <Box
-      key={nickname}
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -22,13 +34,15 @@ export const PlayerStatsItem = ({
         justifyContent: 'flex-start',
       }}
     >
-      <Image
-        src={avatar}
-        width={28}
-        height={28}
-        alt={`${nickname} avatar`}
-        style={{ borderRadius: '50%' }}
-      />
+      {avatar && (
+        <Image
+          src={avatar}
+          width={IMAGE_DIMENSIONS.PLAYER_AVATAR.width}
+          height={IMAGE_DIMENSIONS.PLAYER_AVATAR.height}
+          alt={`${nickname} avatar`}
+          style={{ borderRadius: '50%' }}
+        />
+      )}
       <Box
         sx={{
           display: 'flex',
@@ -61,20 +75,22 @@ export const PlayerStatsItem = ({
           <Image
             alt="death icon"
             src={'/death.svg'}
-            width={18}
-            height={18}
-          ></Image>
+            width={IMAGE_DIMENSIONS.DEATH_ICON.width}
+            height={IMAGE_DIMENSIONS.DEATH_ICON.height}
+          />
         </Box>
         <ListItemText
           sx={{
             fontWeight: 'bold',
             color:
-              kd < 1 ? theme.palette.error.main : theme.palette.success.main,
+              kd < PERFORMANCE_THRESHOLDS.MIN_KD
+                ? theme.palette.error.main
+                : theme.palette.success.main,
             borderRight: `1px solid ${theme.palette.divider}`,
             paddingRight: '6px',
           }}
           disableTypography
-          primary={`${kd}`}
+          primary={typeof kd === 'number' ? kd.toFixed(2) : kd}
         />
         <Box
           sx={{
@@ -86,26 +102,26 @@ export const PlayerStatsItem = ({
           <ListItemText
             sx={{
               color:
-                ADR < 70
+                ADR < PERFORMANCE_THRESHOLDS.MIN_ADR
                   ? theme.palette.error.main
                   : theme.palette.success.main,
               marginLeft: '6px',
               fontSize: '1rem',
             }}
             disableTypography
-            primary={`${ADR}`}
+            primary={ADR}
           />
           <ListItemText
             sx={{
               color:
-                ADR < 70
+                ADR < PERFORMANCE_THRESHOLDS.MIN_ADR
                   ? theme.palette.error.main
                   : theme.palette.success.main,
               marginLeft: '2px',
               fontSize: '.75rem',
             }}
             disableTypography
-            primary={`ADR`}
+            primary="ADR"
           />
         </Box>
       </Box>

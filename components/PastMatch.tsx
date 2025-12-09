@@ -2,62 +2,40 @@ import { useTheme } from '@mui/material'
 import Box from '@mui/material/Box'
 import ListItemText from '@mui/material/ListItemText'
 import Image from 'next/future/image'
-import { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
-import { config } from '../config/misc'
-import { isoToFormat } from '../util/dateTimeHelpers'
-import { useMatchStats } from '../util/useMatchStats'
+import { IMAGE_DIMENSIONS } from '@/src/constants/config'
+import { useMatchStats } from '@/src/hooks/useMatchStats'
+import { isoToFormat } from '@/src/lib/dateHelpers'
+import {
+  didTeamWin,
+  findOurTeam,
+  getFirstRound,
+  getOurPlayers,
+  processPlayerStats,
+} from '@/src/lib/matchHelpers'
+import { Player, ProcessedPlayerStats } from '@/src/types/match.types'
+
 import { ErrorState } from './ErrorState'
 import { LoadingState } from './LoadingState'
 import { PlayerStatsItem } from './PlayerStats'
 import { SmokeListItemButton } from './SmokeListItemButton'
 
-enum StatsProperties {
-  Kills = 'Kills',
-  Assists = 'Assists',
-  Deaths = 'Deaths',
-  KD = 'K/D Ratio',
-  TeamWin = 'Team Win',
-  Win = '1',
-  ADR = 'ADR',
-}
-
-interface PlayerStats {
-  [StatsProperties.Kills]: number
-  [StatsProperties.Assists]: number
-  [StatsProperties.Deaths]: number
-  [StatsProperties.KD]: string
-  [StatsProperties.ADR]: number
-}
-
-export interface PlayerWithStats {
-  player_id: string
-  nickname: string
-  avatar: string
-  player_stats: PlayerStats
-  kills: number
-  assists: number
-  deaths: number
-  kd: number
-  ADR: number
-}
-
-interface Team {
-  players: PlayerWithStats[]
-}
-
 interface PastMatchProps {
   matchId: string
-  players: PlayerWithStats[]
+  players: Player[]
   updatedAt: number
 }
 
-export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
+export const PastMatch: React.FC<PastMatchProps> = ({
+  matchId,
+  players,
+  updatedAt,
+}) => {
   const { data, error, isLoading } = useMatchStats(matchId)
-
   const theme = useTheme()
 
-  const match = useMemo(() => data?.rounds?.[0], [data])
+  const match = useMemo(() => getFirstRound(data), [data])
 
   const getAvatar = useCallback(
     (playerId: string) =>
@@ -65,43 +43,27 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
     [players]
   )
 
-  const [playersStats, isWin] = useMemo(() => {
-    if (!match) return [null, null]
+  const { playersStats, isWin } = useMemo(() => {
+    if (!match?.teams) {
+      return { playersStats: null, isWin: null }
+    }
 
-    const ourTeam = match?.teams?.find((team: Team) =>
-      team?.players.some((player: PlayerWithStats) =>
-        Object.values(config.PLAYER_IDS).includes(player.player_id)
-      )
-    )
+    const ourTeam = findOurTeam(match.teams)
 
-    const we = ourTeam?.players?.filter((player: PlayerWithStats) =>
-      Object.values(config.PLAYER_IDS).includes(player.player_id)
-    )
-    console.log({ we })
-    const playersStats: PlayerWithStats[] = we
-      ?.map((player: PlayerWithStats) => ({
-        avatar: getAvatar(player.player_id),
-        kills: player.player_stats.Kills,
-        assists: player.player_stats.Assists,
-        deaths: player.player_stats.Deaths,
-        kd: parseFloat(player.player_stats[StatsProperties.KD]).toFixed(2),
-        nickname: player.nickname,
-        ADR: player.player_stats.ADR,
-      }))
-      .sort(
-        (a: PlayerWithStats, b: PlayerWithStats) =>
-          b.kills - a.kills || b.kd - a.kd
-      )
+    if (!ourTeam) {
+      return { playersStats: null, isWin: null }
+    }
 
-    return [
-      playersStats,
-      ourTeam?.team_stats[StatsProperties.TeamWin] === StatsProperties.Win,
-    ]
+    const ourPlayers = getOurPlayers(ourTeam)
+    const stats = processPlayerStats(ourPlayers, getAvatar)
+    const win = didTeamWin(ourTeam)
+
+    return { playersStats: stats, isWin: win }
   }, [match, getAvatar])
 
   if (error) return <ErrorState />
   if (isLoading) return <LoadingState />
-  if (!playersStats?.length) return null
+  if (!playersStats?.length || !match) return null
 
   return (
     <SmokeListItemButton matchId={matchId} pastMatch>
@@ -118,8 +80,8 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
         <Image
           src={`/${match.round_stats.Map}.jpg`}
           alt={`${match.round_stats.Map} map`}
-          width={200}
-          height={129}
+          width={IMAGE_DIMENSIONS.MAP_IMAGE.width}
+          height={IMAGE_DIMENSIONS.MAP_IMAGE.height}
         />
       </Box>
       <Box
@@ -176,8 +138,8 @@ export const PastMatch = ({ matchId, players, updatedAt }: PastMatchProps) => {
             },
           }}
         >
-          {playersStats?.map((player: PlayerWithStats, index: number) => (
-            <PlayerStatsItem key={player.nickname + index} {...player} />
+          {playersStats.map((player: ProcessedPlayerStats, index: number) => (
+            <PlayerStatsItem key={`${player.nickname}-${index}`} {...player} />
           ))}
         </Box>
       </Box>

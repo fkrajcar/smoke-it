@@ -1,4 +1,4 @@
-import '../styles/globals.scss'
+import '@/styles/globals.scss'
 
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -6,9 +6,11 @@ import { ThemeProvider } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import React, { useState } from 'react'
 
-import theme from '../styles/theme'
-import createEmotionCache from '../util/createEmotionCache'
+import theme from '@/styles/theme'
+import createEmotionCache from '@/util/createEmotionCache'
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
@@ -20,7 +22,20 @@ function MyApp({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) {
-  const queryClient = new QueryClient()
+  // Create QueryClient instance only once per app lifecycle
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+            staleTime: 30 * 1000,
+          },
+        },
+      })
+  )
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
