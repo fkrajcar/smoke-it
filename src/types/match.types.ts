@@ -53,7 +53,6 @@ export interface PlayerWithStats extends Player {
 }
 
 export interface TeamStats {
-  [StatsProperties.TeamWin]: string
   'Team Win': string
   'Final Score': string
   'First Half Score': string
