@@ -61,8 +61,14 @@ export const PastMatch: React.FC<PastMatchProps> = ({
     return { playersStats: stats, isWin: win }
   }, [match, getAvatar])
 
-  if (error) return <ErrorState />
-  if (isLoading) return <LoadingState />
+  if (isLoading || error?.response?.status === 429) {
+    return <LoadingState />
+  }
+
+  if (error) {
+    return <ErrorState />
+  }
+
   if (!playersStats?.length || !match) return null
 
   return (

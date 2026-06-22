@@ -83,7 +83,7 @@ export const processPlayerStats = (
       ADR: parseInt(player.player_stats[StatsProperties.ADR], 10),
       player_id: player.player_id,
     }))
-    .sort((a, b) => b.kills - a.kills || b.kd - a.kd)
+    .sort((a, b) => b.kills - a.kills || b.ADR - a.ADR || b.kd - a.kd)
 }
 
 /**

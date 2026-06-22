@@ -1,6 +1,7 @@
 import { PLAYER_IDS } from '../constants/config'
 import { faceitApiClient } from '../lib/apiClient'
 import { MatchStats, Player, PlayerMatchHistory } from '../types/match.types'
+const LIMIT_MATCHES_PER_PLAYER = 15
 
 export class MatchService {
   /**
@@ -25,7 +26,9 @@ export class MatchService {
     const playerIds = Object.values(PLAYER_IDS)
 
     const requests = playerIds.map((playerId) =>
-      faceitApiClient.get<PlayerMatchHistory>(`/players/${playerId}/history`)
+      faceitApiClient.get<PlayerMatchHistory>(
+        `/players/${playerId}/history?limit=${LIMIT_MATCHES_PER_PLAYER}`
+      )
     )
 
     return Promise.all(requests)

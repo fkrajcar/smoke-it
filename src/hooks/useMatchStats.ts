@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import useSWRImmutable from 'swr/immutable'
 
 import { API_CONFIG } from '../constants/config'
@@ -7,7 +8,7 @@ import { MatchStats } from '../types/match.types'
 interface UseMatchStatsReturn {
   data?: MatchStats
   isLoading: boolean
-  error: Error | undefined
+  error: AxiosError | undefined
 }
 
 /**

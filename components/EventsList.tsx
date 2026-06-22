@@ -16,7 +16,7 @@ interface EventsListProps {
 const EventsList: React.FC<EventsListProps> = ({ events }) => {
   const { players, isLoading, error } = usePlayers()
 
-  if (isLoading) {
+  if (isLoading || error?.response?.status === 429) {
     return (
       <Box
         sx={{
