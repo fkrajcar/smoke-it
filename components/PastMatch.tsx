@@ -111,9 +111,9 @@ export const PastMatch: React.FC<PastMatchProps> = ({
             marginRight: '10px',
             justifyContent: 'center',
             alignItems: 'center',
+            minHeight: '96px',
           }}
         >
-          <ListItemText primary={match.round_stats.Map} />
           <ListItemText primary={match.round_stats.Score} />
           <ListItemText
             primary={isWin ? 'WIN' : 'LOSE'}
@@ -122,6 +122,10 @@ export const PastMatch: React.FC<PastMatchProps> = ({
                 ? theme.palette.success.main
                 : theme.palette.error.main,
             }}
+          />
+          <ListItemText
+            primary={match.round_stats.Map}
+            primaryTypographyProps={{ fontSize: '0.85rem' }}
           />
           <ListItemText
             primaryTypographyProps={{ fontSize: '0.625rem' }}
